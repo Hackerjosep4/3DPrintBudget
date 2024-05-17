@@ -30,7 +30,7 @@ Si deseas contribuir al desarrollo de este proyecto, ¡te damos la bienvenida! S
 
 ## Autor
 
-Este proyecto fue creado por HAckerjosep4.
+Este proyecto fue creado por Hackerjosep4.
 
 ## Licencia
 
