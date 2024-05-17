@@ -13,7 +13,7 @@ def leerConfig():
         # Leer todas las líneas del archivo
         lines = file.readlines()
     # Retornamos una lista con las configuraciones
-    return [float(lines[0].split(':')[1].strip()), float(lines[1].split(':')[1].strip()), float(lines[2].split(':')[1].strip()), float(lines[3].split(':')[1].strip()), float(lines[4].split(':')[1].strip())]
+    return [float(lines[0].split(':')[1].strip()), float(lines[1].split(':')[1].strip()), float(lines[2].split(':')[1].strip()), float(lines[3].split(':')[1].strip()), str(lines[4].split(':')[1].strip())]
 
 def pedirValores1():
     global gramosGastadosDeFilamento
@@ -178,7 +178,7 @@ def cerrar():
 
 # Variables y constantes
 
-PRECIO_FILAMENTO, PRECIO_LUZ, GASTO_IMPRESORA, PESO_BOBINA, SIMBOLO_MONEDA = leerConfig()
+PRECIO_FILAMENTO, PESO_BOBINA, PRECIO_LUZ, GASTO_IMPRESORA, SIMBOLO_MONEDA = leerConfig()
 ventanaActual = 0
 precioFinal = 0.0
 
