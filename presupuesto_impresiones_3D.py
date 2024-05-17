@@ -13,7 +13,7 @@ def leerConfig():
         # Leer todas las líneas del archivo
         lines = file.readlines()
     # Retornamos una lista con las configuraciones
-    return [float(lines[0].split(':')[1].strip()), float(lines[1].split(':')[1].strip()), float(lines[2].split(':')[1].strip()), float(lines[3].split(':')[1].strip())]
+    return [float(lines[0].split(':')[1].strip()), float(lines[1].split(':')[1].strip()), float(lines[2].split(':')[1].strip()), float(lines[3].split(':')[1].strip()), float(lines[4].split(':')[1].strip())]
 
 def pedirValores1():
     global gramosGastadosDeFilamento
@@ -113,6 +113,7 @@ def pedirNombrePresupuesto():
     button4v4.pack()
 
 def guardarPresupuesto():
+    global SIMBOLO_MONEDA
     global gramosGastadosDeFilamento
     global tiempoDeImpresion
     global gastoLuz
@@ -137,18 +138,18 @@ def guardarPresupuesto():
         # Redirigir la salida estándar al archivo
         print(f"Resultado final:", file=archivo)
         print(file=archivo)
-        print(f"\tFilamento usado: {gramosGastadosDeFilamento}", file=archivo)
-        print(f"\tTiempo de impresion: {tiempoDeImpresion}", file=archivo)
+        print(f"\tFilamento usado: {gramosGastadosDeFilamento} g", file=archivo)
+        print(f"\tTiempo de impresion: {tiempoDeImpresion} H", file=archivo)
         print(file=archivo)
-        print(f"\tGasto energetico: {gastoLuz}", file=archivo)
-        print(f"\tGasto material: {gastoNormalFilamento}", file=archivo)
-        print(f"\tGastos adicionales: {totalGastosAdicionales}", file=archivo)
-        print(f"\tGasto de tiempo: {gastoPorTiempo}", file=archivo)
+        print(f"\tGasto energetico: {gastoLuz} {SIMBOLO_MONEDA}", file=archivo)
+        print(f"\tGasto material: {gastoNormalFilamento} {SIMBOLO_MONEDA}", file=archivo)
+        print(f"\tGastos adicionales: {totalGastosAdicionales} {SIMBOLO_MONEDA}", file=archivo)
+        print(f"\tGasto de tiempo: {gastoPorTiempo} {SIMBOLO_MONEDA}", file=archivo)
         print(file=archivo)
-        print(f"\tGasto total: {gastosTotales}", file=archivo)
-        print(f"\tBeneficio total: {beneficosTotales}", file=archivo)
+        print(f"\tGasto total: {gastosTotales} {SIMBOLO_MONEDA}", file=archivo)
+        print(f"\tBeneficio total: {beneficosTotales} {SIMBOLO_MONEDA}", file=archivo)
         print(file=archivo)
-        print(f"\tPrecio final: {precioFinal}", file=archivo)
+        print(f"\tPrecio final: {precioFinal} {SIMBOLO_MONEDA}", file=archivo)
 
     cancelarPresupuesto()
 
@@ -177,7 +178,7 @@ def cerrar():
 
 # Variables y constantes
 
-PRECIO_FILAMENTO, PRECIO_LUZ, GASTO_IMPRESORA, PESO_BOBINA = leerConfig()
+PRECIO_FILAMENTO, PRECIO_LUZ, GASTO_IMPRESORA, PESO_BOBINA, SIMBOLO_MONEDA = leerConfig()
 ventanaActual = 0
 precioFinal = 0.0
 
@@ -256,26 +257,26 @@ ventana4.geometry("300x500")
 text1v4 = tk.Label(ventana4, text= f'''Resultado final:
 ---------------------------
 Filamento usado:
-{gramosGastadosDeFilamento}
+{gramosGastadosDeFilamento} g
 Tiempo de impresion:
-{tiempoDeImpresion}
+{tiempoDeImpresion} H
 ---------------------------
 Gasto energetico:
-{gastoLuz}
+{gastoLuz} {SIMBOLO_MONEDA}
 Gasto material:
-{gastoNormalFilamento}
+{gastoNormalFilamento} {SIMBOLO_MONEDA}
 Gastos adicionales:
-{totalGastosAdicionales}
+{totalGastosAdicionales} {SIMBOLO_MONEDA}
 Gasto de tiempo:
-{gastoPorTiempo}
+{gastoPorTiempo} {SIMBOLO_MONEDA}
 ---------------------------
 Gasto total:
-{gastosTotales}
+{gastosTotales} {SIMBOLO_MONEDA}
 Beneficio total:
-{beneficosTotales}
+{beneficosTotales} {SIMBOLO_MONEDA}
 ---------------------------
 Precio final:
-{precioFinal}
+{precioFinal} {SIMBOLO_MONEDA}
 ''')
 button1v4 = tk.Button(ventana4, text= "Guardar presupuesto", command= pedirNombrePresupuesto)
 input1v4 = tk.Entry(ventana4)
