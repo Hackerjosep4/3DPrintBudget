@@ -8,12 +8,29 @@ from os.path import exists as buscarArchivo
 # Funciones
 
 def leerConfig():
+
+    if not buscarArchivo("Config.txt"):
+        cerrarPorError("Falta el archivo \"Config.txt\"")
+
     # Abrir el archivo Config.txt en modo lectura
     with open('Config.txt', 'r', encoding='utf-8') as file:
         # Leer todas las líneas del archivo
         lines = file.readlines()
+
+        if len(lines) != 5:
+            cerrarPorError("Contenido erroneo en\nel archivo \"Config.txt\"")
     # Retornamos una lista con las configuraciones
-    return [float(lines[0].split(':')[1].strip()), float(lines[1].split(':')[1].strip()), float(lines[2].split(':')[1].strip()), float(lines[3].split(':')[1].strip()), str(lines[4].split(':')[1].strip())]
+
+    try:
+        config1 = float(lines[0].split(':')[1].strip())
+        config2 = float(lines[1].split(':')[1].strip())
+        config3 = float(lines[2].split(':')[1].strip())
+        config4 = float(lines[3].split(':')[1].strip())
+        config5 = str(lines[4].split(':')[1].strip())
+    except:
+        cerrarPorError("Hay una o varias\nconfiguraciones erroneas")
+
+    return [config1, config2, config3, config4, config5]
 
 def pedirValores1():
     global gramosGastadosDeFilamento
@@ -25,31 +42,37 @@ def pedirValores1():
     global input3v1
     global input4v1
 
-    gramosGastadosDeFilamento = float(input1v1.get().strip())
-    # Calculamos el tiempo de impresion en horas
-    tiempoDeImpresion = 0.0
-    tiempoDeImpresion += float(input2v1.get().strip())*24
-    tiempoDeImpresion += float(input3v1.get().strip())
-    tiempoDeImpresion += (float(input4v1.get().strip())+1)/60
+    try:
+        gramosGastadosDeFilamento = float(input1v1.get().strip())
+        # Calculamos el tiempo de impresion en horas
+        tiempoDeImpresion = 0.0
+        tiempoDeImpresion += float(input2v1.get().strip())*24
+        tiempoDeImpresion += float(input3v1.get().strip())
+        tiempoDeImpresion += (float(input4v1.get().strip())+1)/60
+    except:
+        cerrarPorError("Argumento erroneo")
     ventana1.destroy()
     ventanaActual = 2
 
 
 def pedirValores2():
-        global gastosAdicionales
-        global ventanaActual
-        global ventana2
-        global input1v2
-        global text1v2
+    global gastosAdicionales
+    global ventanaActual
+    global ventana2
+    global input1v2
+    global text1v2
 
-        if input1v2.get() == "":
-            ventana2.destroy()
-            ventanaActual = 3
-            return
+    if input1v2.get() == "":
+        ventana2.destroy()
+        ventanaActual = 3
+        return
 
+    try:
         gastoAdicional = float(input1v2.get().strip().replace(",","."))
-        text1v2["text"] += "\n- " + ("{:.2f}".format(gastoAdicional))
-        gastosAdicionales.append(gastoAdicional)
+    except:
+        cerrarPorError("Argumento erroneo")
+    text1v2["text"] += "\n- " + ("{:.2f}".format(gastoAdicional))
+    gastosAdicionales.append(gastoAdicional)
 
 def calculos():
     global totalGastosAdicionales
@@ -94,8 +117,6 @@ def calculos():
     gastosTotales = totalGastosAdicionales+gastoLuz+gastoNormalFilamento
     beneficosTotales = precioFinal-gastosTotales
 
-    #delay(3.0)
-
     ventana3.after(2000, ventana3.destroy)
     ventanaActual = 4
 
@@ -126,9 +147,12 @@ def guardarPresupuesto():
     global input1v4
 
 
-    nArchivo = input1v4.get()
+    nArchivo = input1v4.get().strip()
     nAuxArchivo = nArchivo
     nAux = 0
+
+    if nAuxArchivo == "":
+        nAuxArchivo = "Unnamed"
 
     
     while buscarArchivo("Presupuestos\\"+nAuxArchivo+".txt"):
@@ -173,6 +197,16 @@ def cerrar():
 
     ventana4.destroy()
     ventanaActual = 5
+
+def cerrarPorError(textError = "Unknow"):
+    ventanaError = tk.Tk()
+    text1vE = tk.Label(ventanaError, text= "Error:")
+    text2vE = tk.Label(ventanaError, text= textError)
+    text1vE.pack()
+    text2vE.pack()
+    ventanaError.after(5000, ventanaError.destroy)
+    ventanaError.mainloop()
+    exit()
 
 
 
