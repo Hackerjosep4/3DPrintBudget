@@ -1,0 +1,4 @@
+cost-filament-k: 17.0
+cost-llum-kw-h: 0.15
+consum-llum-w-h: 100.0
+peso-bobina-g: 1000
