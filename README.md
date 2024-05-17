@@ -34,4 +34,4 @@ Este proyecto fue creado por HAckerjosep4.
 
 ## Licencia
 
-Este proyecto está bajo la licencia [tu licencia aquí].
+Este proyecto está bajo la licencia LICENSE.txt.
