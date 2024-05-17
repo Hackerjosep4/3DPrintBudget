@@ -9,7 +9,7 @@ from os.path import exists as buscarArchivo
 
 def leerConfig():
     # Abrir el archivo Config.txt en modo lectura
-    with open('Config.txt', 'r') as file:
+    with open('Config.txt', 'r', encoding='utf-8') as file:
         # Leer todas las líneas del archivo
         lines = file.readlines()
     # Retornamos una lista con las configuraciones
@@ -130,11 +130,12 @@ def guardarPresupuesto():
     nAuxArchivo = nArchivo
     nAux = 0
 
-    while not buscarArchivo(nAuxArchivo):
+    
+    while buscarArchivo("Presupuestos\\"+nAuxArchivo+".txt"):
         nAux += 1
         nAuxArchivo = f"{nArchivo} ({nAux})"
 
-    with open("Presupuestos\\"+nAuxArchivo.strip()+".txt", 'w') as archivo:
+    with open("Presupuestos\\"+nAuxArchivo.strip()+".txt", 'w', encoding='utf-8') as archivo:
         # Redirigir la salida estándar al archivo
         print(f"Resultado final:", file=archivo)
         print(file=archivo)

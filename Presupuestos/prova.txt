@@ -1,0 +1,14 @@
+Resultado final:
+
+	Filamento usado: 555.0 g
+	Tiempo de impresion: 28.3 H
+
+	Gasto energetico: 0.4245 €
+	Gasto material: 9.435 €
+	Gastos adicionales: 0.0 €
+	Gasto de tiempo: 1.1320000000000001 €
+
+	Gasto total: 9.8595 €
+	Beneficio total: 6.1305 €
+
+	Precio final: 15.99 €
