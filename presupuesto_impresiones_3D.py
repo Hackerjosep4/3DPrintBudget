@@ -1,7 +1,7 @@
 # Imports
 
 import tkinter as tk
-from os.path import exists as buscarArchivo
+from os.path import exists as archivoExiste
 
 
 
@@ -9,7 +9,7 @@ from os.path import exists as buscarArchivo
 
 def leerConfig():
 
-    if not buscarArchivo("Config.txt"):
+    if not archivoExiste("Config.txt"):
         cerrarPorError("Falta el archivo \"Config.txt\"")
 
     # Abrir el archivo Config.txt en modo lectura
@@ -92,7 +92,6 @@ def calculos():
     global ventanaActual
     global ventana3
 
-
     # Sumamos precio de los gastos adicionales
     totalGastosAdicionales = float(sum(gastosAdicionales))*1.5
     precioFinal += totalGastosAdicionales
@@ -104,12 +103,12 @@ def calculos():
     precioFinal += gastoPorTiempo
     # Sumamos precio del filamento
     gastoNormalFilamento = (PRECIO_FILAMENTO*gramosGastadosDeFilamento)/PESO_BOBINA
-    if gastoNormalFilamento < 5:
+    if gastoNormalFilamento < 10:
         precioFinal += gastoNormalFilamento*2
-    elif gastoNormalFilamento > 10:
+    elif gastoNormalFilamento > 20:
         precioFinal += gastoNormalFilamento*1.5
     else:
-        precioFinal += gastoNormalFilamento+5
+        precioFinal += gastoNormalFilamento+10
 
     # Redondear precio final
     precioFinal = round(precioFinal, 2)
@@ -155,7 +154,7 @@ def guardarPresupuesto():
         nAuxArchivo = "Unnamed"
 
     
-    while buscarArchivo("Presupuestos\\"+nAuxArchivo+".txt"):
+    while archivoExiste("Presupuestos\\"+nAuxArchivo+".txt"):
         nAux += 1
         nAuxArchivo = f"{nArchivo} ({nAux})"
 
@@ -316,7 +315,7 @@ Precio final:
 button1v4 = tk.Button(ventana4, text= "Guardar presupuesto", command= pedirNombrePresupuesto)
 input1v4 = tk.Entry(ventana4)
 button2v4 = tk.Button(ventana4, text= "Cerrar", command= cerrar)
-button3v4 = tk.Button(ventana4, text= "Confirmar nombre\ny guardar recibo", command= guardarPresupuesto)
+button3v4 = tk.Button(ventana4, text= "Confirmar nombre\ny guardar presupuesto", command= guardarPresupuesto)
 button4v4 = tk.Button(ventana4, text= "Cancelar", command= cancelarPresupuesto)
 
 text1v4.pack()
