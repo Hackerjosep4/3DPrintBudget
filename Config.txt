@@ -1,5 +1,5 @@
-costo-filamento: 17.0
+costo-bobina: 17.0
 peso-bobina-g: 1000.0
-costo-luz-kw-h: 0.15
-consumo-luz-w-h: 100.0
+costo-electricidad-kw-h: 0.15
+consumo-electricidad-impresora-w-h: 100.0
 simbolo-moneda: €
