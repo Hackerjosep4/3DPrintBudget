@@ -2,23 +2,21 @@
 #
 # 1: Imports                        Linea: 
 # 2: Funciones                      Linea: 
-# 3: Iniciar ventana principal      Linea: 
-# 4: Variables                      Linea: 
-# 5: Codigo                         Linea: 
-# 6: Maninloop ventana principal    Linea: 
-# 7: Finalizar programa             Linea:
+# 3: Variables                      Linea: 
+# 4: Codigo                         Linea: 
+# 5: Finalizar programa             Linea:
 # 
 # 
 # 
 # 
 # 
-# Ventana0 : Inicializar
-# Ventana1 : Pedir valores
-# Ventana2 : Gastos extras
-# Ventana3 : Hacer calculos
-# Ventana4 : Enseñar recivo
-# Ventana5 : Guardar recivo
-# Ventana6 : Cerrar
+# Apartado0 : Inicializar
+# Apartado1 : Pedir valores
+# Apartado2 : Gastos extras
+# Apartado3 : Hacer calculos
+# Apartado4 : Enseñar recivo
+# Apartado5 : Guardar recivo
+# Apartado6 : Cerrar
 # 
 # 
 # 
@@ -38,10 +36,10 @@
 
 # 1: Imports
 
-# Libreria para la parte grafica
-import tkinter as tk
 # Funcion para comprovar si un archivo existe
 from os.path import exists as archivoExiste
+#
+from time import sleep as delay
 
 
 
@@ -56,38 +54,17 @@ from os.path import exists as archivoExiste
 
 # Para cerrar el codigo en caso de error
 def cerrarPorError(textError = "Unknow"):
-    # Crear una ventana secundaria para el mensage
-    ventanaError = tk.Toplevel()
-    # Añadir los textos
-    text1vE = tk.Label(ventanaError, text= "Error:")
-    text2vE = tk.Label(ventanaError, text= textError)
-    text1vE.pack()
-    text2vE.pack()
-    # Hacer que finalize el codigo despues de 5 segundos
-    ventanaError.after(5000, exit)
-    # Llamar al mainloop
-    ventanaError.mainloop()
+    print(f"Error: {textError}")
+    delay(5)
     # Para que se cierre el codigo en caso que salga del mainloop
     exit()
 
 # Cerrar el programa
 def cerrar():
-    # Llamar a la ventana principal
-    global ventanaPrincipal
-    # Cerrar ventana principal
-    ventanaPrincipal.destroy()
+    print("\nPrograma finalizado")
+    delay(5)
     # Cerrar codigo
     exit()
-
-# Para vaciar la ventana principal y añadir elementos desde cero
-def vaciarVentanaPrincipal():
-    # Llamar a las variables globales
-    global ventanaPrincipal
-    # Destruir cada elemento de la ventana principal
-    for elemento in ventanaPrincipal.winfo_children():
-        elemento.destroy()
-    ventanaPrincipal.geometry("100x100")
-    ventanaPrincipal.title("")
 
 def reiniciarVariables():
     global gramosUsados
@@ -258,86 +235,65 @@ def calculos():
     # Calcular beneficio
     beneficioTotal = precioFinal-gastoTotal
 
-def loadVentana1():
+def loadApartado1():
     global gramosUsados
+    global tiempoDeDuracion
     global tiempoDeDuracionD
     global tiempoDeDuracionH
     global tiempoDeDuracionM
-    global ventanaPrincipal
 
-    vaciarVentanaPrincipal()
+    print("\n\n\n")
 
-    ventanaPrincipal.title("Introducir datos")
-    ventanaPrincipal.geometry("275x220")
+    gramosUsados = float(str(input("Gramos gastados durante la impresion: ")).strip().replace(",","."))
+    print("Tiempos de impresion:")
+    tiempoDeDuracionD = float(input("Dias: ").strip().replace(",","."))
+    tiempoDeDuracionH = float(input("Horas: ").strip().replace(",","."))
+    tiempoDeDuracionM = float(input("Minutos: ").strip().replace(",","."))
+    tiempoDeDuracion = tiempoDeDuracionD*24 + tiempoDeDuracionH + tiempoDeDuracionM/60
+    print()
 
-    text1v1 = tk.Label(ventanaPrincipal, text= "Gramos gastados durante la impresion:")
-    input1v1 = tk.Entry(ventanaPrincipal)
-    text2v1 = tk.Label(ventanaPrincipal, text= "Tiempos de impresion:")
-    text3v1 = tk.Label(ventanaPrincipal, text= "Dias:")
-    input2v1 = tk.Entry(ventanaPrincipal)
-    text4v1 = tk.Label(ventanaPrincipal, text= "Horas:")
-    input3v1 = tk.Entry(ventanaPrincipal)
-    text5v1 = tk.Label(ventanaPrincipal, text= "Minutos:")
-    input4v1 = tk.Entry(ventanaPrincipal)
-    button1v1 = tk.Button(ventanaPrincipal, text= "Continuar", command= lambda: funButton1v1(input1v1.get(), input2v1.get(), input3v1.get(), input4v1.get()))
+    loadApartado2()
 
-    input1v1.insert(0, str(gramosUsados))
-    input2v1.insert(0, str(tiempoDeDuracionD))
-    input3v1.insert(0, str(tiempoDeDuracionH))
-    input4v1.insert(0, str(tiempoDeDuracionM))
-
-    text1v1.pack()
-    input1v1.pack()
-    text2v1.pack()
-    text3v1.pack()
-    input2v1.pack()
-    text4v1.pack()
-    input3v1.pack()
-    text5v1.pack()
-    input4v1.pack()
-    button1v1.pack()
-
-def loadVentana2():
-    global ventanaPrincipal
+def loadApartado2():
     global listaGastosAdicionales
 
-    vaciarVentanaPrincipal()
-
-    ventanaPrincipal.title("Introducir datos")
-    ventanaPrincipal.geometry("275x250")
-
-    text1v2 = tk.Label(ventanaPrincipal, text= "Introduzca los gastos adicionales:\n(Dejar en blanco para continuar)")
-    text2v2 = tk.Label(ventanaPrincipal, text= "")
-    input1v2 = tk.Entry(ventanaPrincipal)
-    button1v2 = tk.Button(ventanaPrincipal, text= "Continuar", command= lambda: funButton1v2(input1v2.get()))
-    button2v2 = tk.Button(ventanaPrincipal, text= "Atras", command= loadVentana1)
+    print("\n\n\n")
+    
+    print("Introduzca los gastos adicionales:\n(Dejar en blanco para continuar)")
 
     for i in listaGastosAdicionales:
-        text2v2["text"] += f"\n- {i}"
+        print(f"- {i}")
 
-    text1v2.pack()
-    text2v2.pack()
-    input1v2.pack()
-    button1v2.pack()
-    button2v2.pack()
+    gastoAdicional = input(": ").strip().replace(",",".")
 
-def loadVentana3():
+    if gastoAdicional != "":
+        listaGastosAdicionales.append(float(gastoAdicional))
+        loadApartado2()
+    
+    entradaMenu = input("Menu:\n\tC - Continuar\n\tA - Atras\nRespuesta: ").strip().lower()
+    while not (entradaMenu in ["c","a"]):
+        print("\nRespuesta incorrecta\n")
+        entradaMenu = input("Menu:\n\tC - Continuar\n\tA - Atras\nRespuesta: ").strip().lower()
+    
+    if entradaMenu == "a":
+        loadApartado1()
+    else:
+        loadApartado3()
+
+def loadApartado3():
     global ventanaPrincipal
 
-    vaciarVentanaPrincipal()
+    print("\n\n\n")
 
-    ventanaPrincipal.title("Calculos")
-    ventanaPrincipal.geometry("250x100")
-
-    text1v3 = tk.Label(ventanaPrincipal, text= "Cargando...")
-
-    text1v3.pack()
+    print("Cargando...")
 
     calculos()
 
-    ventanaPrincipal.after(2000, loadVentana4)
+    delay(2)
 
-def loadVentana4():
+    loadApartado4()
+
+def loadApartado4():
     # Llamamos a las variables globales
     global SIMBOLO_MONEDA
     global gramosUsados
@@ -355,12 +311,9 @@ def loadVentana4():
     global precioFinal
     global ventanaPrincipal
 
-    vaciarVentanaPrincipal()
+    print("\n\n\n")
 
-    ventanaPrincipal.title("Presupuesto")
-    ventanaPrincipal.geometry("350x400")
-
-    text1v4 = tk.Label(ventanaPrincipal, text= f'''Resultado final:
+    print(f'''Resultado final:
 ------------------------------------------------------------------
 Filamento usado: {gramosUsados} g
 Tiempo de impresion: {tiempoDeDuracion} H
@@ -379,105 +332,48 @@ Gasto total: {gastoTotal} {SIMBOLO_MONEDA}
 Beneficio total: {beneficioTotal} {SIMBOLO_MONEDA}
 ------------------------------------------------------------------
 Precio final: {precioFinal} {SIMBOLO_MONEDA}''')
-    button1v4 = tk.Button(ventanaPrincipal, text= "Guardar presupuesto", command= loadVentana5)
-    button2v4 = tk.Button(ventanaPrincipal, text= "Salir", command= loadVentana6)
-    button3v4 = tk.Button(ventanaPrincipal, text= "Atras", command= loadVentana2)
     
-    text1v4.pack()
-    button1v4.pack()
-    button2v4.pack()
-    button3v4.pack()
-
-def loadVentana5():
-    global ventanaPrincipal
-
-    vaciarVentanaPrincipal()
-
-    ventanaPrincipal.title("Guardar")
-    ventanaPrincipal.geometry("225x150")
-
-    text1v5 = tk.Label(ventanaPrincipal, text= "Introducir nombre\ndel Presupuesto:")
-    input1v5 = tk.Entry(ventanaPrincipal)
-    button1v5 = tk.Button(ventanaPrincipal, text= "Confirmar nombre\ny guardar presupuesto", command= lambda: funButton1v5(input1v5.get().strip()))
-    button2v5 = tk.Button(ventanaPrincipal, text= "Cancelar", command= loadVentana4)
-
-    text1v5.pack()
-    input1v5.pack()
-    button1v5.pack()
-    button2v5.pack()
-
-def loadVentana6():
-    global ventanaPrincipal
-
-    vaciarVentanaPrincipal()
-
-    ventanaPrincipal.title("Final")
-    ventanaPrincipal.geometry("200x125")
-
-    text1v6 = tk.Label(ventanaPrincipal, text= "")
-    button1v6 = tk.Button(ventanaPrincipal, text= "Volver a empezar", command= funButton1v6)
-    button2v6 = tk.Button(ventanaPrincipal, text= "Atras", command= loadVentana4)
-    button3v6 = tk.Button(ventanaPrincipal, text= "Cerrar", command= cerrar)
-
-    text1v6.pack()
-    button1v6.pack()
-    button2v6.pack()
-    button3v6.pack()
-
-def funButton1v1(gramos, dias, horas, minutos):
-    global gramosUsados
-    global tiempoDeDuracion
-    global tiempoDeDuracionD
-    global tiempoDeDuracionH
-    global tiempoDeDuracionM
-
-    gramosUsados = float(str(gramos).strip().replace(",","."))
-    tiempoDeDuracionD = float(str(dias).strip().replace(",","."))
-    tiempoDeDuracionH = float(str(horas).strip().replace(",","."))
-    tiempoDeDuracionM = float(str(minutos).strip().replace(",","."))
-    tiempoDeDuracion = tiempoDeDuracionD*24 + tiempoDeDuracionH + tiempoDeDuracionM/60
-
-    loadVentana2()
-
-def funButton1v2(gastoAdicional):
-    gastoAdicional = str(gastoAdicional).strip().replace(",",".")
-
-    if gastoAdicional == "":
-        loadVentana3()
+    entradaMenu = input("Menu:\n\tG - Guardar presupuesto\n\tA - Atras\n\tS - Salir\nRespuesta: ").strip().lower()
+    while not (entradaMenu in ["g","a","s"]):
+        print("\nRespuesta incorrecta\n")
+        entradaMenu = input("Menu:\n\tG - Guardar presupuesto\n\tA - Atras\n\tS - Salir\nRespuesta: ").strip().lower()
+    
+    if entradaMenu == "g":
+        loadApartado2()
+    elif entradaMenu == "a":
+        loadApartado5()
     else:
-        gastoAdicional = float(gastoAdicional)
-        listaGastosAdicionales.append(gastoAdicional)
-        loadVentana2()
+        loadApartado6()
 
-def funButton1v5(nombreArchivo):
-    guardarPresupuesto(nombreArchivo)
+def loadApartado5():
+    global ventanaPrincipal
 
-    loadVentana4()
+    print("\n\n\n")
 
-def funButton1v6():
-    reiniciarVariables()
+    nArchivo = input("Nombre del presupuesto: ").strip()
 
-    loadVentana1()
+    if nArchivo != "":
+        guardarPresupuesto(nArchivo)
+    
+    loadApartado4()
 
+def loadApartado6():
+    global ventanaPrincipal
 
+    print("\n\n\n")
 
+    entradaMenu = input("Menu:\n\tV - Volver a empezar\n\tA - Atras\n\tC - Cerrar\nRespuesta: ").strip().lower()
+    while not (entradaMenu in ["v","a","c"]):
+        print("\nRespuesta incorrecta\n")
+        entradaMenu = input("Menu:\n\tV - Volver a empezar\n\tA - Atras\n\tC - Cerrar\nRespuesta: ").strip().lower()
 
-
-
-
-
-
-
-# 3: Iniciar ventana principal
-
-ventanaPrincipal = tk.Tk()
-ventanaPrincipal.geometry("250x100")
-ventanaPrincipal.title("Iniciando...")
-text1v0 = tk.Label(ventanaPrincipal, text= "Iniciando...")
-text1v0.pack(expand= True)
-
-
-
+    if entradaMenu == "v":
+        reiniciarVariables()
+        loadApartado1()
+    elif entradaMenu == "a":
+        loadApartado4()
+    else:
+        cerrar()
 
 
 
@@ -485,7 +381,10 @@ text1v0.pack(expand= True)
 
 
 
-# 4: Variables
+
+
+
+# 3: Variables
 
 # Iniciar variables
 PRECIO_BOBINA = 0.0
@@ -523,22 +422,9 @@ PRECIO_BOBINA, PESO_BOBINA, PRECIO_ELECTRICIDAD, CONSUMO_IMPRESORA, SIMBOLO_MONE
 
 
 
-# 5: Codigo
+# 4: Codigo
 
-loadVentana1()
-
-
-
-
-
-
-
-
-
-
-# 6: Mainloop ventana principal
-
-ventanaPrincipal.mainloop()
+loadApartado1()
 
 
 
@@ -549,6 +435,6 @@ ventanaPrincipal.mainloop()
 
 
 
-# 7: Finalizar programa
+# 5: Finalizar programa
 
 exit()
