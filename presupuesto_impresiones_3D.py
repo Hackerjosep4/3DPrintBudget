@@ -39,6 +39,10 @@
 # Funcion para comprovar si un archivo existe
 from os.path import exists as archivoExiste
 #
+from os.path import abspath as rutaArchivo
+#
+from os.path import dirname as rutaCarpeta
+#
 from time import sleep as delay
 
 
@@ -103,14 +107,17 @@ def reiniciarVariables():
     beneficioTotal = 0.0
     precioFinal = 0.0
 
+def asignarRuta():
+    return rutaCarpeta(rutaArchivo(__file__))
+
 def leerConfig():
     # Comprovar que el archivo exista
-    if not archivoExiste("Config.txt"):
+    if not archivoExiste(RUTA_CARPETA_ARCHIVO+"\\Config.txt"):
         # Lanzar un error en caso de que no exista
         cerrarPorError("Falta el archivo \"Config.txt\"")
 
     # Abrir el archivo Config.txt en modo lectura
-    with open('Config.txt', 'r', encoding='utf-8') as file:
+    with open(RUTA_CARPETA_ARCHIVO+'\\Config.txt', 'r', encoding='utf-8') as file:
         # Leer todas las líneas del archivo
         lines = file.readlines()
 
@@ -163,7 +170,7 @@ def guardarPresupuesto(nArchivo = ""):
         nAuxArchivo = f"{nArchivo} ({nAux})"
 
     # Guardamos el archivo
-    with open("Presupuestos\\"+nAuxArchivo.strip()+".txt", 'w', encoding='utf-8') as archivo:
+    with open(RUTA_CARPETA_ARCHIVO+"\\Presupuestos\\"+nAuxArchivo.strip()+".txt", 'w', encoding='utf-8') as archivo:
         # Redirigir la salida estándar al archivo
         print(f'''Resultado final:
 ------------------------------------------------------------------
@@ -392,6 +399,7 @@ PESO_BOBINA = 0.0
 PRECIO_ELECTRICIDAD = 0.0
 CONSUMO_IMPRESORA = 0.0
 SIMBOLO_MONEDA = ""
+RUTA_CARPETA_ARCHIVO = ""
 gramosUsados = 0.0
 tiempoDeDuracion = 0.0
 tiempoDeDuracionD = 0.0
@@ -411,6 +419,7 @@ beneficioTotal = 0.0
 precioFinal = 0.0
 
 # Dar valores iniciales
+RUTA_CARPETA_ARCHIVO = asignarRuta()
 PRECIO_BOBINA, PESO_BOBINA, PRECIO_ELECTRICIDAD, CONSUMO_IMPRESORA, SIMBOLO_MONEDA = leerConfig()
 
 
